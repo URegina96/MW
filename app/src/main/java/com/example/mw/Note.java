@@ -1,6 +1,10 @@
-package com.example.mw;   
-
+package com.example.mw;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+@Entity(tableName = "notes")
 public class Note {
+    @PrimaryKey(autoGenerate = true)
+    private int id; // Уникальный ID заметки
     private String title; // Заголовок заметки
     private String description; // Описание заметки
 
@@ -8,7 +12,13 @@ public class Note {
         this.title = title; // Инициализация заголовка
         this.description = description; // Инициализация описания
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getTitle() { // Метод для получения заголовка
         return title; // Возвращаем заголовок
     }

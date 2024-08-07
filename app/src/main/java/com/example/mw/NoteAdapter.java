@@ -11,15 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
-    private ArrayList<Note> notesList; // Список заметок для адаптера
+    private static ArrayList<Note> notesList; // Список заметок для адаптера
     private Context context; // Контекст приложения
 
     public NoteAdapter(ArrayList<Note> notes, MainActivity context) { // Конструктор адаптера
         this.notesList = notes; // Инициализация списка заметок
         this.context = context; // Инициализация контекста
+    }
+    public void updateNotes(List<Note> notes) {
+        notesList.clear(); // Очищаем текущий список
+        notesList.addAll(notes); // Добавляем все новые заметки
+        notifyDataSetChanged(); // Уведомляем адаптер о изменениях
     }
 
     @NonNull
@@ -46,9 +52,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         return notesList.size(); // Возвращаем размер списка заметок
     }
 
-    public void removeItem(int position) {
-        notesList.remove(position); // Удаляем элемент по позиции
-        notifyItemRemoved(position); // Уведомляем адаптер об изменении
+    public void removeItem(Note note) {
+        notesList.remove(note); // Удаляем элемент из списка
+        notifyDataSetChanged(); // Уведомляем адаптер о изменениях
     }
 
     static class NoteViewHolder extends RecyclerView.ViewHolder {
@@ -58,5 +64,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             super(itemView); // Вызов конструктора родителя
             textView = itemView.findViewById(android.R.id.text1); // Инициализируем TextView
         }
+    }
+    public Note getNoteAtPosition(int position) {
+        return notesList.get(position); // Возвращаем заметку по позиции
     }
 }
